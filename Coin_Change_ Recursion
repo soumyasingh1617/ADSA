@@ -1,0 +1,33 @@
+Coin change problem using  recursion.
+
+#include <iostream>
+#include <vector>
+using namespace std;
+void backtrack(vector<int>& coins, int target, int index, int& count) {
+    if (target == 0) {
+        count++; 
+        return;
+    }
+    if (target < 0) {
+        return; 
+    }
+    for (int i = index; i < coins.size(); i++) {
+        target -= coins[i];
+        backtrack(coins, target, i, count);
+        target += coins[i];  
+    }
+}
+int coinChangeWays(vector<int>& coins, int sum) {
+    int count = 0;
+    backtrack(coins, sum, 0, count);
+    return count;
+}
+int main() {
+    vector<int> coins = {1, 2, 3};
+    int sum = 4;
+
+    int ways = coinChangeWays(coins, sum);
+    cout << "Number of ways to make sum " << sum << " = " << ways << endl;
+
+    return 0;
+}
