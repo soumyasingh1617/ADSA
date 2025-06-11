@@ -1,0 +1,30 @@
+Coin Change problem using Recursion with Memoization.
+
+#include <iostream>
+#include <vector>
+using namespace std;
+int backtrack(vector<int>& coins, int target, int index, vector<vector<int>>& dp) {
+    if (target == 0) return 1;
+    if (target < 0) return 0;
+    if (dp[index][target] != -1) return dp[index][target];
+    int ways = 0;
+    for (int i = index; i < coins.size(); i++) {
+        ways += backtrack(coins, target - coins[i], i, dp);
+    }
+    dp[index][target] = ways;
+    return ways;
+}
+int coinChangeWays(vector<int>& coins, int sum) {
+    int n = coins.size();
+    vector<vector<int>> dp(n, vector<int>(sum + 1, -1));
+    return backtrack(coins, sum, 0, dp);
+}
+int main() {
+    vector<int> coins = {1, 2, 3};
+    int sum = 4;
+    int ways = coinChangeWays(coins, sum);
+    cout << "Number of ways to make sum " << sum << " is: " << ways << endl;
+
+    return 0;
+}
+
