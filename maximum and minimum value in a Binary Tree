@@ -1,0 +1,39 @@
+To find the maximum and minimum value in a Binary Tree.
+
+#include <iostream>
+#include <climits>  // for INT_MIN and INT_MAX
+using namespace std;
+struct TreeNode {
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int val) {
+        data = val;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+int findMax(TreeNode* root) {
+    if (root == nullptr) return INT_MIN;
+    int leftMax = findMax(root->left);
+    int rightMax = findMax(root->right);
+    return max(root->data, max(leftMax, rightMax));
+}
+int findMin(TreeNode* root) {
+    if (root == nullptr) return INT_MAX;
+    int leftMin = findMin(root->left);
+    int rightMin = findMin(root->right);
+    return min(root->data, min(leftMin, rightMin));
+}
+int main() {
+    TreeNode* root = new TreeNode(10);
+    root->left = new TreeNode(5);
+    root->right = new TreeNode(15);
+    root->left->left = new TreeNode(2);
+    root->left->right = new TreeNode(7);
+    root->right->right = new TreeNode(20);
+    cout << "Maximum value in tree: " << findMax(root) << endl;
+    cout << "Minimum value in tree: " << findMin(root) << endl;
+    return 0;
+}
+
