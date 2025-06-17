@@ -1,0 +1,50 @@
+Take an array as input, define tree node and construct a BST.
+
+ #include <iostream>
+using namespace std;
+struct TreeNode {
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+
+    TreeNode(int val) {
+        data = val;
+        left = right = nullptr;
+    }
+};
+
+TreeNode* insertBST(TreeNode* root, int val) {
+    if (root == nullptr) {
+        return new TreeNode(val);
+    }
+    if (val < root->data) {
+        root->left = insertBST(root->left, val);
+    } else {
+        root->right = insertBST(root->right, val);
+    }
+    return root;
+}
+void inorder(TreeNode* root) {
+    if (root == nullptr) return;
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+int main() {
+    int n;
+    cout << "Enter number of elements: ";
+    cin >> n;
+    int arr[n];
+    cout << "Enter elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    TreeNode* root = nullptr;
+    for (int i = 0; i < n; i++) {
+        root = insertBST(root, arr[i]);
+    }
+    cout << "Inorder traversal of BST: ";
+    inorder(root);
+    cout << endl;
+    return 0;
+}
