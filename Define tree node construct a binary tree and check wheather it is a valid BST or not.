@@ -1,0 +1,42 @@
+Define tree node construct a binary tree and check wheather it is a valid BST or not.
+
+#include <iostream>
+#include <climits>
+using namespace std;
+struct TreeNode {
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+
+    TreeNode(int val) {
+        data = val;
+        left = right = nullptr;
+    }
+};
+TreeNode* Tree() {
+    TreeNode* root = new TreeNode(10);
+    root->left = new TreeNode(5);
+    root->right = new TreeNode(15);
+    root->right->left = new TreeNode(12);
+    root->right->right = new TreeNode(20);
+    return root;
+}
+bool isValidBST(TreeNode* root, long long minVal, long long maxVal) {
+    if (root == nullptr) return true;
+    if (root->data <= minVal || root->data >= maxVal)
+        return false;
+    return isValidBST(root->left, minVal, root->data) &&
+           isValidBST(root->right, root->data, maxVal);
+}
+bool isValidBST(TreeNode* root) {
+    return isValidBST(root, LLONG_MIN, LLONG_MAX);
+}
+int main() {
+    TreeNode* root = Tree();
+    if (isValidBST(root)) {
+        cout << "The tree is a valid BST." << endl;
+    } else {
+        cout << "The tree is NOT a valid BST." << endl;
+    }
+    return 0;
+}
